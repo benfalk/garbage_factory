@@ -1,0 +1,10 @@
+AllCops:
+  Exclude:
+    - Guardfile
+    - vendor/**/*
+
+LineLength:
+  Max: 110
+
+Documentation:
+  Enabled: false

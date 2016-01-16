@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/benfalk/garbage_factory.svg?branch=master)](https://travis-ci.org/benfalk/garbage_factory)
+
 # GarbageFactory
 
 TODO: Write a gem description
