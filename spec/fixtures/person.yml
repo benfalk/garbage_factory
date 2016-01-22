@@ -1,0 +1,19 @@
+title: Person
+description: Models a run-of-the-mill person
+type: object
+required:
+  - fname
+  - lname
+properties:
+  first_name:
+    title: First Name
+    description: A person's "Given" name
+    type: string
+  last_name:
+    title: Last Name
+    description: A person's "Family" name
+    type: string
+  age:
+    title: Age
+    description: How old in years a person is
+    type: integer
