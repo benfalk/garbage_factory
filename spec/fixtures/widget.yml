@@ -1,0 +1,53 @@
+title: Widget
+description: Models a fictional manufactured item
+type: object
+required:
+  - model_number
+properties:
+  model_number:
+    title: Model Number
+    description: Describes what design family the widget belongs to
+    type: string
+allOf:
+  - $ref: '#/definitions/production_metrics'
+  - $ref: '#/definitions/sales_figures'
+anyOf:
+  - $ref: '#/definitions/quality_fields'
+  - type: object
+    properties:
+      serial_number:
+        title: Serial Number
+        description: A unique identifier for this item
+        type: string
+definitions:
+  quality_fields:
+    title: Quality Fields
+    description: Properties relating to quality control
+    type: object
+    properties:
+      vetted:
+        title: Vetted
+        description: Answers if the product has been inspected
+        type: boolean
+      recalled:
+        title: Recalled
+        description: Answers if the product has been requested for fixes
+        type: boolean
+  production_metrics:
+    title: Production Metrics
+    description: Properties relating to common production stats
+    type: object
+    properties:
+      rejection_rate:
+        title: Failure Rate
+        description: How often a part fails a quality check (between zero and one)
+        type: number
+  sales_figures:
+    title: Sales Figures
+    description: Describes how likely and how much a model sells for
+    type: object
+    properties:
+      msrp:
+        title: MSRP
+        description: Manufacturer Suggested Retail Price (in cents)
+        type: integer

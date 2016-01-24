@@ -8,3 +8,8 @@ LineLength:
 
 Documentation:
   Enabled: false
+
+# Prevent rubocop from wanting "a" and "e" as block variables
+# for reduce and inject... that's retarded in my opinion
+Style/SingleLineBlockParams:
+  Methods: []
