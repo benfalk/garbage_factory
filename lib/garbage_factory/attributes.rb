@@ -1,3 +1,5 @@
+require 'ostruct'
+
 module GarbageFactory
   class Attributes
     include Enumerable
@@ -8,7 +10,7 @@ module GarbageFactory
       'boolean' => Axiom::Types::Boolean,
       'number' => Float,
       'null' => NilClass,
-      'object' => Hash,
+      'object' => OpenStruct,
       'array' => Array
     }.freeze
 
@@ -52,7 +54,9 @@ module GarbageFactory
     end
 
     def schema_properties
-      schema['properties'] || {}
+      (schema['properties'] || {})
+        .map { |key, prop| [key, resolve_dependencies(prop)] }
+        .to_h
     end
 
     def type_for(property)

@@ -1,0 +1,42 @@
+title: Passenger Jet Flight
+description: Models a commercial flight one might take
+type: object
+required:
+  - airline_company
+  - aircraft_model
+  - origin_details
+  - destination_details
+properties:
+  airline_company:
+    title: Airline Company
+    description: The buisness that runs the aircraft
+    type: string
+  aircraft_model:
+    type: object
+    properties:
+      max_distance:
+        type: integer
+      max_passengers:
+        type: integer
+  origin_details:
+    $ref: '#/definitions/location_details'
+  destination_details:
+    $ref: '#/definitions/location_details'
+definitions:
+  location_details:
+    title: Location Details
+    description: |
+      Describes where a customer boards or leaves a flight,
+      both by location and time
+    type: object
+    properties:
+      gate_number:
+        type: string
+      time:
+        type: string
+      airport:
+        type: string
+      country:
+        type: string
+      city:
+        type: string

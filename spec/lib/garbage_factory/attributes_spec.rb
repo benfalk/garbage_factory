@@ -21,5 +21,14 @@ describe GarbageFactory::Attributes do
       it { is_expected.to include([:msrp, Integer]) }
       it { is_expected.to include([:rejection_rate, Float]) }
     end
+
+    context 'when loaded with a complex compound object schema' do
+      let(:schema) { GFFixtures.get_fixture('flight') }
+
+      it { is_expected.to include([:airline_company, String]) }
+      it { is_expected.to include([:aircraft_model, OpenStruct]) }
+      it { is_expected.to include([:origin_details, OpenStruct]) }
+      it { is_expected.to include([:destination_details, OpenStruct]) }
+    end
   end
 end
