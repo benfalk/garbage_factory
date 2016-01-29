@@ -59,10 +59,24 @@ describe 'Adding Flight Properties from a Compound Schema' do
       its(:country) { is_expected.to eq 'USA' }
       its(:city) { is_expected.to eq 'San Fran' }
     end
+  end
 
-    describe 'Getter & Setter methods' do
-      subject { klass.new }
-      # TODO OpenStruct doesn't work with this
+  describe 'Getter & Setter methods' do
+    subject { klass.new }
+
+    it 'should let you add and get "aircraft_model.max_distance"' do
+      subject.aircraft_model.max_distance = 1000
+      expect(subject.aircraft_model.max_distance).to eq 1000
+    end
+
+    it 'should let you add and get "aircraft_model.max_passengers"' do
+      subject.aircraft_model.max_passengers = 210
+      expect(subject.aircraft_model.max_passengers).to eq 210
+    end
+
+    it 'should let you add and get "origin_details.gate_number"' do
+      subject.origin_details.gate_number = 'ROFL'
+      expect(subject.origin_details.gate_number).to eq 'ROFL'
     end
   end
 end

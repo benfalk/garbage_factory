@@ -26,9 +26,9 @@ describe GarbageFactory::Attributes do
       let(:schema) { GFFixtures.get_fixture('flight') }
 
       it { is_expected.to include([:airline_company, String]) }
-      it { is_expected.to include([:aircraft_model, OpenStruct]) }
-      it { is_expected.to include([:origin_details, OpenStruct]) }
-      it { is_expected.to include([:destination_details, OpenStruct]) }
+      it { is_expected.to include([:aircraft_model, be_a_instance_of(Class), { default: {} }]) }
+      it { is_expected.to include([:origin_details, be_a_instance_of(Class), { default: {} }]) }
+      it { is_expected.to include([:destination_details, be_a_instance_of(Class), { default: {} }]) }
     end
   end
 end

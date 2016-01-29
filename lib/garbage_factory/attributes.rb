@@ -10,7 +10,6 @@ module GarbageFactory
       'boolean' => Axiom::Types::Boolean,
       'number' => Float,
       'null' => NilClass,
-      'object' => OpenStruct,
       'array' => Array
     }.freeze
 
@@ -28,7 +27,7 @@ module GarbageFactory
 
     def attributes
       @attributes ||= properties.map do |attr, property|
-        [attr.to_sym, type_for(property)]
+        [attr.to_sym, type_for(property), options_for(property)].compact
       end
     end
 
@@ -60,7 +59,17 @@ module GarbageFactory
     end
 
     def type_for(property)
-      CASTS[property['type']]
+      return CASTS[property['type']] unless property['type'] == 'object'
+      Class.new.instance_eval do
+        include GarbageFactory.model(property)
+
+        self
+      end
+    end
+
+    def options_for(property)
+      return nil unless property['type'] == 'object'
+      { default: {} }
     end
   end
 end
