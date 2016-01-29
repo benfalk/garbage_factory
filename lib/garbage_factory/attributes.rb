@@ -68,8 +68,8 @@ module GarbageFactory
     end
 
     def options_for(property)
-      return nil unless property['type'] == 'object'
-      { default: {} }
+      return { default: {} } if property['type'] == 'object'
+      return { default: property['default'] } unless property['default'].nil?
     end
   end
 end

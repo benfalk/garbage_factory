@@ -1,0 +1,18 @@
+title: Vehicle
+description: Models different kinds of personal transportation
+type: object
+properties:
+  audio_entertainment:
+    title: Audio Entertainment
+    description: Answers to if something like a radio is present
+    type: boolean
+    default: false
+  requires_license:
+    title: Requires License
+    description: Answers to if the vehicle requires certified training
+    type: boolean
+    default: true
+  wheel_count:
+    title: Wheel Count
+    type: integer
+    default: 2

@@ -30,5 +30,13 @@ describe GarbageFactory::Attributes do
       it { is_expected.to include([:origin_details, be_a_instance_of(Class), { default: {} }]) }
       it { is_expected.to include([:destination_details, be_a_instance_of(Class), { default: {} }]) }
     end
+
+    context 'when loaded with a schema defining defaults' do
+      let(:schema) { GFFixtures.get_fixture('vehicle') }
+
+      it { is_expected.to include([:audio_entertainment, Axiom::Types::Boolean, { default: false }]) }
+      it { is_expected.to include([:requires_license, Axiom::Types::Boolean, { default: true }]) }
+      it { is_expected.to include([:wheel_count, Integer, { default: 2 }]) }
+    end
   end
 end
