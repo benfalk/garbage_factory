@@ -1,0 +1,10 @@
+{
+  "title": "Fire",
+  "description": "Feel the burn!",
+  "type": "object",
+  "properties": {
+    "color": { "type": "string" },
+    "temp": { "type": "number" },
+    "duration": { "type": "number" }
+  }
+}
