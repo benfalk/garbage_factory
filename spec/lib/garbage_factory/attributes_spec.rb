@@ -29,6 +29,16 @@ describe GarbageFactory::Attributes do
       it { is_expected.to include([:aircraft_model, be_a_instance_of(Class), { default: {} }]) }
       it { is_expected.to include([:origin_details, be_a_instance_of(Class), { default: {} }]) }
       it { is_expected.to include([:destination_details, be_a_instance_of(Class), { default: {} }]) }
+
+      context 'when scoped to a specific definition' do
+        let(:instance) { described_class.new(schema: schema, at: '#/definitions/location_details') }
+
+        it { is_expected.to include([:gate_number, String]) }
+        it { is_expected.to include([:time, String]) }
+        it { is_expected.to include([:airport, String]) }
+        it { is_expected.to include([:country, String]) }
+        it { is_expected.to include([:city, String]) }
+      end
     end
 
     context 'when loaded with a schema defining defaults' do

@@ -13,10 +13,11 @@ module GarbageFactory
       'array' => Array
     }.freeze
 
-    attr_reader :schema
+    attr_reader :schema, :target
 
-    def initialize(schema: {})
+    def initialize(schema: {}, at: '#/')
       @schema = schema
+      @target = resolve_dependencies('$ref' => at)
     end
 
     def each(&block)
@@ -32,13 +33,13 @@ module GarbageFactory
     end
 
     def properties
-      @properties ||= schema_properties
+      @properties ||= target_properties
                       .merge(additional_properties('anyOf'))
                       .merge(additional_properties('allOf'))
     end
 
     def additional_properties(collection_key)
-      (schema[collection_key] || {})
+      (target[collection_key] || {})
         .map(&method(:resolve_dependencies))
         .map { |additional_schema| additional_schema['properties'] }
         .compact
@@ -52,8 +53,8 @@ module GarbageFactory
       segments.reduce(schema) { |tree, branch| tree[branch] || {} }
     end
 
-    def schema_properties
-      (schema['properties'] || {})
+    def target_properties
+      (target['properties'] || {})
         .map { |key, prop| [key, resolve_dependencies(prop)] }
         .to_h
     end
