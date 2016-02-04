@@ -8,12 +8,12 @@ require 'garbage_factory/attributes'
 module GarbageFactory
   module_function
 
-  def model(schema, at: '#/')
+  def model(schema, at: '#/', override: {})
     resolved_schema = resolve_schema(schema)
     Module.new.instance_eval do
       include Virtus.module
 
-      Attributes.new(schema: resolved_schema, at: at).each do |attr|
+      Attributes.new(schema: resolved_schema, at: at, override: override).each do |attr|
         attribute(*attr)
       end
 

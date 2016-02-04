@@ -13,10 +13,11 @@ module GarbageFactory
       'array' => Array
     }.freeze
 
-    attr_reader :schema, :target
+    attr_reader :schema, :target, :overrides
 
-    def initialize(schema: {}, at: '#/')
+    def initialize(schema: {}, at: '#/', override: {})
       @schema = schema
+      @overrides = override
       @target = resolve_dependencies('$ref' => at)
     end
 
@@ -49,6 +50,7 @@ module GarbageFactory
     def resolve_dependencies(given_schema)
       return given_schema unless given_schema['$ref'].is_a? String
       return given_schema unless given_schema['$ref'][0, 2] == '#/'
+      return given_schema if override?(given_schema)
       _, *segments = given_schema['$ref'].split('/')
       segments.reduce(schema) { |tree, branch| tree[branch] || {} }
     end
@@ -60,6 +62,7 @@ module GarbageFactory
     end
 
     def type_for(property)
+      return override_for(property) if override?(property)
       return CASTS[property['type']] unless property['type'] == 'object'
       Class.new.instance_eval do
         include GarbageFactory.model(property)
@@ -71,6 +74,14 @@ module GarbageFactory
     def options_for(property)
       return { default: {} } if property['type'] == 'object'
       return { default: property['default'] } unless property['default'].nil?
+    end
+
+    def override_for(property)
+      overrides[property['$ref']]
+    end
+
+    def override?(property)
+      overrides.keys.include? property['$ref']
     end
   end
 end

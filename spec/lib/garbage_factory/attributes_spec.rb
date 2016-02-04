@@ -39,6 +39,17 @@ describe GarbageFactory::Attributes do
         it { is_expected.to include([:country, String]) }
         it { is_expected.to include([:city, String]) }
       end
+
+      context 'when overriding what types to use within the schema' do
+        let(:instance) do
+          described_class.new(schema: schema, override: { '#/definitions/location_details' => :roflcopter })
+        end
+
+        it { is_expected.to include([:airline_company, String]) }
+        it { is_expected.to include([:aircraft_model, be_a_instance_of(Class), { default: {} }]) }
+        it { is_expected.to include([:origin_details, :roflcopter]) }
+        it { is_expected.to include([:destination_details, :roflcopter]) }
+      end
     end
 
     context 'when loaded with a schema defining defaults' do
