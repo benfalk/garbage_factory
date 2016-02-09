@@ -4,6 +4,7 @@ require 'json'
 require 'open-uri'
 require 'garbage_factory/version'
 require 'garbage_factory/attributes'
+require 'garbage_factory/schema'
 
 module GarbageFactory
   module_function
